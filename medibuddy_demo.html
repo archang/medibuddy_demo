@@ -1,0 +1,47 @@
+<html>
+<head>
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
+<script src="dygraphs/dygraph-combined-dev.js"></script>
+<script src="dygraphs/dygraph-combined.js"></script>
+<script src="jquery_2.2.4.js"></script>
+<script type="text/javascript" src="medibuddy_demo.js"></script>
+<link rel="stylesheet" type="text/css" href="medibuddy_demo.css" />
+
+</head>
+<body>
+
+<ul class="tab">
+  <li><a href="#" class="tablinks" onclick="newTab(event, 'Profile')">Profile</a></li>
+  <li><a href="#" class="tablinks" onclick="newTab(event, 'Add Dose')">Add Dose</a></li>
+</ul>
+
+<div id="Profile" class="tabcontent">
+  <h3>Profile</h3>
+  Weight<input id="weight" type="number"> lbs
+  <p>Height<input id="height_ft" type="number" min="0" max="7">ft <input id="height_inch" type="number" min="0" max="11">in</p>
+  <p>Gender<input type="radio" name="gender" value="Male">Male  <input type="radio" name="gender" value="Female">Female</p>
+  <p>Apply<input type="button" name="apply_profile"></p>
+</div>
+
+<div id="Add Dose" class="tabcontent">
+  <h3>Add Dose</h3>
+  <p>Drug <select id="drug">
+  <option value="Tylenol">Tylenol</option>
+  <option value="Alcohol">Alcohol</option>
+  </select></p>
+  <p>Dose<input type="number" id="dose_amount" value="500000"> microgram</p>
+  <p>Time<input type="number" id="dose_time" value="60"> minutes from now
+  <p>Apply<input type="button" onclick="apply_dose(drug, dose_amount, dose_time)"></p>
+</div>
+
+<div id="tylenol_graph" style="width:600px; height:300px;"></div>
+<div id="tylenol_history" style="width:600px;"></div>
+
+<div id="alcohol_graph" style="width:600px; height:300px;"></div>
+
+<!-- <script type="text/javascript">
+console.log(dosage_history_time[0]);
+</script> -->
+
+</body>
+</html>
