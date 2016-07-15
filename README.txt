@@ -1,3 +1,8 @@
+To test on your local system:
+1. Click on "Clone or download" green button.
+2. Click "Download ZIP"
+3. Navigate to the "medibuddy_demo.html" file, right-click, open in Chrome, Safari, etc.
+
 Demo 1.0
 
 Features to be added (7/14)
