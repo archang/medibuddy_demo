@@ -37,11 +37,11 @@ if (weight.value == "0" || height_ft.value == "0" || height_inch.value == "0") {
 
       for (var i = 0; i < 720; i++) {
         if (i >= dosage_history_time[0]) {
-          base_tylenol = .63*(150/weight.value)*dosage_history_amount[0]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[0])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[0]))))/67000/(.0833-0.00522)
+          base_tylenol = .63*(150/weight.value)*500000*dosage_history_amount[0]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[0])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[0]))))/67000/(.0833-0.00522)
         }
         for (var j = 1; j < dosage_history_amount.length; j++) {
           if (i >= dosage_history_time[j]) {
-            base_tylenol += .63*(150/weight.value)*dosage_history_amount[j]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[j])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[j]))))/67000/(.0833-0.00522)
+            base_tylenol += .63*(150/weight.value)*500000*dosage_history_amount[j]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[j])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[j]))))/67000/(.0833-0.00522)
           }
         }
 
@@ -75,7 +75,7 @@ if (weight.value == "0" || height_ft.value == "0" || height_inch.value == "0") {
 
       // Shift one portion out of line.
       var highlight_start = 3;
-      var highlight_end = 300;
+      var highlight_end = 200;
       var toxic_highlight_top = 1000000000;
 
       // toxicCheckboxValue = document.getElementById("showToxicCheckbox").checked;
