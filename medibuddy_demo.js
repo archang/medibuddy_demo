@@ -11,7 +11,7 @@
 //         }
 //         data.push([i, base, base]);
 //       }
-
+//
 //       // Shift one portion out of line.
 //       // var highlight_start = 450;
 //       // var highlight_end = 500;
@@ -63,8 +63,15 @@ function newTab(evt, cityName) {
 }
   var dosage_history_amount = [];
   var dosage_history_time = [];
+  var tylenol_therapeutic_range = [3,100];
 
-function apply_dose(drug, dose_amount, dose_time) {
+function apply_dose(weight, height_ft, height_inch, drug, dose_amount, dose_time) {
+
+if (weight.value == "0" || height_ft.value == "0" || height_inch.value == "0") {
+  // alert
+  console.log("nope");
+}
+
   var data_tylenol = [];
   var data_alcohol = [];
   dosage_history_amount[dosage_history_amount.length] = dose_amount.value;
@@ -73,11 +80,11 @@ function apply_dose(drug, dose_amount, dose_time) {
 
       for (var i = 0; i < 720; i++) {
         if (i >= dosage_history_time[0]) {
-          base_tylenol = .63*dosage_history_amount[0]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[0])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[0]))))/67000/(.0833-0.00522)
+          base_tylenol = .63*(150/weight.value)*dosage_history_amount[0]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[0])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[0]))))/67000/(.0833-0.00522)
         }
         for (var j = 1; j < dosage_history_amount.length; j++) {
           if (i >= dosage_history_time[j]) {
-            base_tylenol += .63*dosage_history_amount[j]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[j])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[j]))))/67000/(.0833-0.00522)
+            base_tylenol += .63*(150/weight.value)*dosage_history_amount[j]*.0833*(Math.pow(Math.E,(-0.00522*(i-dosage_history_time[j])))-Math.pow(Math.E,(-0.0833*(i-dosage_history_time[j]))))/67000/(.0833-0.00522)
           }
         }
 
@@ -110,49 +117,47 @@ function apply_dose(drug, dose_amount, dose_time) {
       // console.log("dosage_history_time = [" + dosage_history_time + "]");
 
       // Shift one portion out of line.
-      // var highlight_start = 450;
-      // var highlight_end = 500;
+      var highlight_start = 3;
+      var highlight_end = 300;
+      var toxic_highlight_top = 1000000000;
+
+      // toxicCheckboxValue = document.getElementById("showToxicCheckbox").checked;
+
       // for (var i = highlight_start; i <= highlight_end; i++) {
       //   data[i][2] += 5.0;
       // }
 
-      new Dygraph(
+      graph = new Dygraph(
           document.getElementById("tylenol_graph"),
           data_tylenol,
           {
             labels: ['X', 'Est.', 'Actual'],
+            ylabel: 'mcg/ml',
+            xlabel: 'minutes',
             animatedZooms: true,
+            
             underlayCallback: function(canvas, area, g) {
-              // var bottom_left = g.toDomCoords(highlight_start, -20);
-              // var top_right = g.toDomCoords(highlight_end, +20);
 
-              // var left = bottom_left[0];
-              // var right = top_right[0];
+              //Adults: 7.5-10 g
+              //Children: 150 mg/kg; 200 mg/kg in healthy children aged 1-6 years
+              var therapeutic_bottom = g.toDomYCoord(highlight_start);
+              var therapeutic_top = g.toDomYCoord(highlight_end);
+              var toxic_top = g.toDomYCoord(toxic_highlight_top);
+              var notEnough_below = g.toDomYCoord(0);
 
-              canvas.fillStyle = "rgba(255, 255, 102, 1.0)";
-              // canvas.fillRect(left, area.y, right - left, area.h);
+        canvas.fillStyle = "rgba(0, 255, 0, 1.0)";
+        canvas.fillRect(area.x, therapeutic_top, area.w, therapeutic_bottom - therapeutic_top);
+
+        canvas.fillStyle = "rgba(255, 0, 0, 1.0)";
+        canvas.fillRect(area.x, toxic_top, area.w, therapeutic_top - toxic_top);
+
+        canvas.fillStyle = "rgba(255, 255, 0, 1.0)";
+        canvas.fillRect(area.x, therapeutic_bottom, area.w, notEnough_below - therapeutic_bottom);        
+
             }
 
           }
       );
 
-      new Dygraph(
-          document.getElementById("alcohol_graph"),
-          data_tylenol,
-          {
-            labels: ['X', 'Est.', 'Actual'],
-            animatedZooms: true,
-            underlayCallback: function(canvas, area, g) {
-              // var bottom_left = g.toDomCoords(highlight_start, -20);
-              // var top_right = g.toDomCoords(highlight_end, +20);
 
-              // var left = bottom_left[0];
-              // var right = top_right[0];
-
-              canvas.fillStyle = "rgba(255, 255, 102, 1.0)";
-              // canvas.fillRect(left, area.y, right - left, area.h);
-            }
-
-          }
-      );
 }

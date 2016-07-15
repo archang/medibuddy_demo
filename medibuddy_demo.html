@@ -17,10 +17,9 @@
 
 <div id="Profile" class="tabcontent">
   <h3>Profile</h3>
-  Weight<input id="weight" type="number"> lbs
-  <p>Height<input id="height_ft" type="number" min="0" max="7">ft <input id="height_inch" type="number" min="0" max="11">in</p>
-  <p>Gender<input type="radio" name="gender" value="Male">Male  <input type="radio" name="gender" value="Female">Female</p>
-  <p>Apply<input type="button" name="apply_profile"></p>
+  Weight<input id="weight" type="number" value="150"> lbs
+  <p>Height<input id="height_ft" type="number" min="0" max="7" value="5">ft <input id="height_inch" type="number" min="0" max="12" value="7">in</p>
+  <p>Gender<input type="radio" name="gender" value="Male" checked="true">Male  <input type="radio" name="gender" value="Female">Female</p>
 </div>
 
 <div id="Add Dose" class="tabcontent">
@@ -30,9 +29,10 @@
   <option value="Alcohol">Alcohol</option>
   </select></p>
   <p>Dose<input type="number" id="dose_amount" value="500000"> microgram</p>
-  <p>Time<input type="number" id="dose_time" value="60"> minutes from now
-  <p>Apply<input type="button" onclick="apply_dose(drug, dose_amount, dose_time)"></p>
-</div>
+  <p>Time<input type="number" id="dose_time" value="0"> minutes from now
+  <p>Apply<input type="button" onclick="apply_dose(weight, height_ft, height_inch, drug, dose_amount, dose_time)"></p>
+<!--   <p>Show toxic level<input type="checkbox" onclick="showToxicLevel()"></p>
+ --></div>
 
 <div id="tylenol_graph" style="width:600px; height:300px;"></div>
 <div id="tylenol_history" style="width:600px;"></div>
